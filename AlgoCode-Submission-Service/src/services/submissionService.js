@@ -27,7 +27,7 @@ class SubmissionService {
 
         console.log(languageCodeStub) 
 
-        submissionPayload.code = submissionPayload.code +  "\n\n" + languageCodeStub.startSnippet + "\n\n" + languageCodeStub.endSnippet;
+        //submissionPayload.code = submissionPayload.code +  "\n\n" + languageCodeStub.startSnippet + "\n\n" + languageCodeStub.endSnippet;
 
 
         const submission = await this.submissionRepository.createSubmission(submissionPayload);
@@ -40,13 +40,14 @@ class SubmissionService {
             [submission._id]: {
                 code: submission.code,
                 language: submission.language,
-                inputCase: problemAdminApiResponse.data.testCases[0].input,   //retrieves first input test case
-                outputCase: problemAdminApiResponse.data.testCases[0].output,  
+                inputCase: problemAdminApiResponse.data.testCases[0].input,  
+                outputCase: problemAdminApiResponse.data.testCases[0].output, 
                 userId,
                 submissionId: submission._id
 
             }
         });
+        console.log(response);
 
         // TODO: Add handling of all testcases here .
         return {queueResponse: response, submission};

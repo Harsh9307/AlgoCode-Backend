@@ -20,9 +20,8 @@ class PythonExecutor implements CodeExecutorStrategy {
 
 
         console.log("Initialising a new python docker container");
-        const runCommand = `echo "${code.replace(/"/g, '\\"')}" > test.py && echo "1\n${inputTestCase}" | python3 test.py`;
+        const runCommand = `echo "${code.replace(/"/g, '\\"')}" > test.py && echo "${inputTestCase}" | python3 test.py`;
 
-        console.log(runCommand);
         // const pythonDockerContainer = await createContainer(PYTHON_IMAGE, ['python3', '-c', code, 'stty -echo']); 
         const pythonDockerContainer = await createContainer(PYTHON_IMAGE, [
             '/bin/sh', 
@@ -50,6 +49,9 @@ class PythonExecutor implements CodeExecutorStrategy {
 
         try {
             const codeResponse : string = await this.fetchDecodedStream(loggerStream, rawLogBuffer);
+            console.log(codeResponse);
+            console.log("input test case:",inputTestCase);
+            console.log("output test case:",outputTestCase);
             if (codeResponse.trim() === outputTestCase.trim()) {
                 return { output: codeResponse, status: "SUCCESS" };
             } else {
