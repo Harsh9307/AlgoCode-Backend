@@ -12,8 +12,9 @@ const redisCache = new Redis(); // Create Redis client
 
 const io = new Server(httpServer, { 
     cors: {
-        origin: ["http://localhost:5500","http://127.0.0.1:5500"],
-        methods: ["GET", "POST"]
+        origin: ["http://localhost:5500","http://127.0.0.1:5500","http://localhost:5173"],
+        methods: ["GET", "POST"],
+        credentials: true
     }
  }); // Create socket.io server
 
